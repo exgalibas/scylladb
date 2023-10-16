@@ -1,4 +1,4 @@
-## <span id="scylladb_install">安装ScyllaDB</span>
+## Linux ScyllaDB Web安装程序
 
 ScyllaDB Web安装程序是一个与平台无关的安装脚本，可以通过curl将ScyllaDB安装在linux上也可以在[ScyllaDB安装中心](https://www.scylladb.com/download/#core)下载对应指定平台的安装包进行手动安装
 
