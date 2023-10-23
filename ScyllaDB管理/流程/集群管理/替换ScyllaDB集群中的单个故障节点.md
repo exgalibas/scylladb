@@ -1,8 +1,8 @@
-## 替换ScyllaDB集群中的单个死节点
+## 替换ScyllaDB集群中的单个故障节点
 
-替换死节点操作将导致群集中的其他节点将数据流式传输到被替换的节点，此操作可能需要一些时间（取决于数据大小和网络带宽）
+替换故障节点操作将导致群集中的其他节点将数据流式传输到被替换的节点，此操作可能需要一些时间（取决于数据大小和网络带宽）
 
-此过程用于替换一个死节点。要替换多个死节点，请重复执行替换单死节点操作
+此过程用于替换一个故障节点。要替换多个故障节点，请重复执行替换单故障节点操作
 
 ### 前提
 
@@ -17,8 +17,8 @@
     UN  192.168.1.202  91.11 KB   256     32.9%             125ed9f4-7777-1dbn-mac8-43fddce9123e   B1
     DN  192.168.1.203  124.42 KB  256     32.6%             675ed9f4-6564-6dbd-can8-43fddce952gy   B1
     ```
-    注意：必须确保被替换的死节点永远不会重新加入到群集，因为这可能会导致脑裂。从集群网络或VPC中删除被替换的死节点
-- 登录到死节点，如果有相应权限，请手动删除数据，使用以下命令删除数据：
+    注意：必须确保被替换的故障节点永远不会重新加入到群集，因为这可能会导致脑裂。从集群网络或VPC中删除被替换的故障节点
+- 登录到故障节点，如果有相应权限，请手动删除数据，使用以下命令删除数据：
 
     ```
     sudo rm -rf /var/lib/scylla/data
@@ -33,9 +33,9 @@
   - Scylla version - `scylla --version`
 
 ### 流程
-注意：如果您的Scylla版本早于Scylla开源4.3或Scylla企业版2021.1，请通过运行`cat /etc/scylla/scylla.yaml | grep seeds:`来检查死节点是否为种子节点：
-  - 如果列出了死节点的IP地址，则死节点是种子节点，按照[替换死种子节点](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/cluster-management/replace-seed-node.html)中的说明替换种子节点
-  - 如果未列出死节点的IP地址，则死节点不是种子节点，请继续按照以下步骤替换
+注意：如果您的Scylla版本早于Scylla开源4.3或Scylla企业版2021.1，请通过运行`cat /etc/scylla/scylla.yaml | grep seeds:`来检查故障节点是否为种子节点：
+  - 如果列出了故障节点的IP地址，则故障节点是种子节点，按照[替换死种子节点](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/cluster-management/replace-seed-node.html)中的说明替换种子节点
+  - 如果未列出故障节点的IP地址，则故障节点不是种子节点，请继续按照以下步骤替换
 
 同时建议检查所有节点的种子节点配置，有关详细信息请参阅[种子节点](https://opensource.docs.scylladb.com/stable/kb/seed-nodes.html)
 
@@ -47,7 +47,7 @@
     - endpoint_snitch - 设置的snitch
     - rpc_address - 用于客户端连接（Thrift，CQL）的地址
     - consistent_cluster_management - 设置为现有其他节点使用的相同值
-3. 将`replace_node_first_boot`参数添加到新节点的`scylla.yaml`配置文件中，成功替换节点后，也无需将其从`scylla.yaml`文件中删除（注意：不再支持过时的参数`replace_address`和`replace_address_first_boot`，不应使用），`replace_node_first_boot`参数的值应为要替换的死节点的主机ID
+3. 将`replace_node_first_boot`参数添加到新节点的`scylla.yaml`配置文件中，成功替换节点后，也无需将其从`scylla.yaml`文件中删除（注意：不再支持过时的参数`replace_address`和`replace_address_first_boot`，不应使用），`replace_node_first_boot`参数的值应为要替换的故障节点的主机ID
 
     例如：
     ```
@@ -75,7 +75,7 @@
     UN  192.168.1.202  91.11 KB   256     32.9%             125ed9f4-7777-1dbn-mac8-43fddce9123e   B1
     DN  192.168.1.203  124.42 KB  256     32.6%             675ed9f4-6564-6dbd-can8-43fddce952gy   B1
     ```
-    `192.168.1.203`是对应的死节点
+    `192.168.1.203`是对应的故障节点
 
     替换节点`192.168.1.204`将开始引导数据，在引导过程中，我们不会在节点状态列表中看到`192.168.1.204`
 

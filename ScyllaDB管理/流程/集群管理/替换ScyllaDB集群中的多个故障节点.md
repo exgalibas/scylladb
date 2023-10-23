@@ -1,4 +1,4 @@
-## 替换ScyllaDB集群中的多个死节点
+## 替换ScyllaDB集群中的多个故障节点
 Scylla是一个容错系统，即使多个节点关闭，群集也可用
 
 ### 前提
@@ -22,5 +22,5 @@ Scylla是一个容错系统，即使多个节点关闭，群集也可用
 
 ### 步骤
 依赖副本因子
-- 如果故障节点数小于keyspace的副本因子，则仍然至少有一个包含数据的可用副本，参考[替换ScyllaDB集群中的单个死节点](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/cluster-management/replace-dead-node.html)
-- 如果故障节点数大于或等于keyspace的副本因子，则部分数据可能已经丢失，需要使用备份恢复。先操作[替换ScyllaDB集群中的单个死节点](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/cluster-management/replace-dead-node.html)再操作[从备份中恢复数据](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/backup-restore/restore.html)
+- 如果故障节点数小于keyspace的副本因子，则仍然至少有一个包含数据的可用副本，参考[替换ScyllaDB集群中的单个故障节点](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/cluster-management/replace-dead-node.html)
+- 如果故障节点数大于或等于keyspace的副本因子，则部分数据可能已经丢失，需要使用备份恢复。先操作[替换ScyllaDB集群中的单个故障节点](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/cluster-management/replace-dead-node.html)再操作[从备份中恢复数据](https://opensource.docs.scylladb.com/stable/operating-scylla/procedures/backup-restore/restore.html)
