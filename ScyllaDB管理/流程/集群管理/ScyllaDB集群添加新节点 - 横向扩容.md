@@ -1,4 +1,4 @@
-## 将新节点添加到现有ScyllaDB集群中 - 横向扩容
+## ScyllaDB集群添加新节点 - 横向扩容
 
 添加新节点时，群集中的其他节点会将数据流式传输到新节点，此操作称为引导，可能很耗时，具体取决于数据大小和网络带宽。如果使用[多可用区](https://opensource.docs.scylladb.com/stable/faq.html#faq-best-scenario-node-multi-availability-zone)，请确保它们是平衡的
 
